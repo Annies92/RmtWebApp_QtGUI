@@ -1,0 +1,594 @@
+<!--
+/********************************************************************/
+/*                                                                  */
+/*           HTML application file                                  */
+/*               (index.html)                                       */
+/*                                                                  */
+/* Date:     24.07.19                                               */
+/* Author:   sivaram, intec GmbH Luedenscheid                       */
+/*                                                                  */
+/********************************************************************/
+-->
+
+<!DOCTYPE html>
+<html>
+ <head>
+   <title>ARGUS Remote Web application</title>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+         <script type="text/javascript" src="qwebchannel.js"></script>
+         <script type="text/javascript" src="script.js"></script>
+         <script type="text/javascript" src="basic.js"></script>
+         <script type="text/javascript" src="priolist.js"></script>
+         <script type="text/javascript" src="optlist.js"></script>
+         <script type="text/javascript" src="menulist.js"></script>
+         <script type="text/javascript" src="gridview.js"></script>
+         <script type="text/javascript" src="numEditor.js"></script>
+         <script type="text/javascript" src="textEditor.js"></script>
+         <script type="text/javascript" src="twovalEditor.js"></script>
+         <script type="text/javascript" src="mvlstatus.js"></script>
+         <script type="text/javascript" src="testsview.js"></script>
+       <style type="text/css">
+
+        html { height    : 100%;  width        : 100%;}
+
+        body { padding          : 20px;     }
+
+        * { box-sizing   : border-box;      }
+
+        .box {
+        border           : 2px solid green;
+        width            : 480px;
+        height           : 800px;           }
+
+        .aboveTitle {
+        background-color : gray;
+        border           : 1px solid black;
+        color            : white;
+        padding          : 2px 5px;
+        text-align       : center;
+        display          : inline-block;
+        width            : 147px;
+        height           : 25px;
+        font-size        : 15px;
+        font-weight      : bold;
+        float            : left;
+        }
+
+        .Titleline {
+        border           : 1px solid black;
+        text-align       : center;
+        display          : inline-block;
+        font-size        : 20px;
+        width            : 441px;
+        height           : 55px;
+        margin-top       : 5px;
+        margin-bottom    : 5px;
+        font-weight      : bold;
+        }
+
+        .Back-button {
+        display          : inline-block;
+        width            : 45px;
+        height           : 53px;
+        float            : left;
+        cursor           : pointer;
+        font-size-adjust : 1.6;
+        background-color : #333333;
+        border           : 1px solid #333333;
+        color            : white;
+        }
+
+        .Back-button:after {
+        position         : absolute;
+        bottom           : 0; height           : 0;
+        width            : 0; right            : 0; }
+
+        .title {
+        background-color : #333333;
+        color            : #ffffff;
+        text-align       : center;
+        font-size        : 20px;
+        padding          : 15px 5px;
+        width            : 349px;
+        height           : 53px;
+        float            : left;
+        }
+
+        .manager {
+        background-color : #333333;
+        border           : 1px solid #333333;
+        color            : white;
+        width            : 45px;
+        height           : 53px;
+        float            : left;
+        text-align       : center;
+        font-size-adjust : 1.5;
+        cursor           : pointer;
+        }
+
+        .UI {
+        border           : 1px solid black;
+        color            : black;
+        height           : 560px;
+        width            : 440px;
+        overflow-y       : scroll;
+        }
+
+        .Argus_connection {
+        background-color : gray;
+        color            : white;
+        text-align       : center;
+        font-size        : 25px;
+        padding          : 5px 10px;
+        width            : 441px;
+        height           : 40px;
+        margin-top       : 5px;
+        margin-bottom    : 5px;
+        }
+
+        .button-group .button {
+        background-color : #808080;
+        border           : 1px solid black;
+        color            : #ffffff;
+        padding          : 5px 15px;
+        text-align       : center;
+        display          : inline-block;
+        width            : 110.25px;
+        height           : 40px;
+        font-size        : 18px;
+        cursor           : pointer;
+        float            : left;
+
+
+        }
+
+        .button-group .button:not(:last-child) {
+        border-right     : none; /* Prevent double borders */  }
+
+        .button-group .button:hover { background-color : blue; }
+
+        .listView {
+        text-align       : justify;
+        display          : flex;
+        flex-direction   : row;
+        padding          : 3px 3px;
+        }
+
+        .listLabel {
+        width            : 420px;
+        height           : 50px;
+        max-height       : 70px;
+        height           : 100%;
+        color            : black;
+        font-weight      : 1000;
+        font-family      : serif;
+        font-size        : 18px;
+        background-color : gray;
+        border           : 1px solid black;
+        padding          : 15px 5px;
+        text-align       : left;
+        display          : inline-block;
+        }
+
+
+        .abstractView {
+        display          : flex;
+        border           : 1px solid black;
+        margin           : 5px 7px 5px 10px;
+        width            : 415px;
+
+        }
+
+
+        .abstractLabel {
+        width        : 240px;
+        width    : 50%;
+
+        height           : 50px;
+
+        color            : black;
+        font-size        : 16px;
+        font-family      : serif;
+        font-weight      : 1000;
+        background-color : gray;
+        padding          : 5px 5px;
+        text-align       : left;
+        display          : inline-block;
+        float            : left;
+        white-space      : pre-wrap;
+        word-wrap        : break-word;
+        text-overflow    : ellipsis;
+        overflow         : hidden;
+
+        }
+
+        .statusView{
+        height           : 540px;
+        width            : 440px;
+        background-color : gray;
+
+        }
+        .gridView {
+        display               : grid;
+        grid-template-columns : repeat(4,105px);
+        grid-template-rows    : repeat(4,1fr);
+        }
+
+        .gridbuttons {
+        background-color : gray;
+        border           : 1px solid black;
+        color            : black;
+        display          : flex;
+        align-items      : center;
+        text-align       : center;
+        font-family      : Arial;
+        width            : 105px;
+        height           : 100px;
+        font-size        : 15px;
+        font-weight      : bold;
+        cursor           : pointer;
+        white-space      : pre-wrap;
+        overflow         : hidden;
+        word-wrap        : break-word;
+        text-overflow    : ellipsis;
+        }
+
+        .Mgbuttons {
+        background-color : gray;
+        border           : 1px solid black;
+        color            : black;
+        padding          : 10px 5px;
+        text-align       : center;
+        display          : inline-block;
+        width            : 105px;
+        height           : 100px;
+        font-size        : 18px;
+        font-size-adjust : 1.7;
+        cursor           : pointer;
+        }
+
+        .Mgbuttons:hover   { background-color : blue; }
+        .gridbuttons:hover { background-color : blue; }
+
+        .Okbutton {
+        background-color : gray;
+        height           : 35px;
+        width            : 75px;
+        color            : black;
+        margin           : 380px 0px 0px 190px;
+        font-size        : 20px;
+        border           : none;
+        }
+
+        .Okbutton:hover { background-color : blue; }
+
+        .textEditor {
+        background-color : white;
+        color            : black;
+        border           : 1px solid black;
+        height           : 250px;
+        width            : 415px;
+        font-size        : 20px;
+        margin-left      : 10px;
+        margin-top       : 10px;
+        }
+
+        .textLabel {
+        height           : 35px;
+        width            : 150px;
+        font-size        : 20px;
+        font-family      : serif;
+        display          : block;
+        float            : right;
+        margin-right     : 5px;
+        padding-top      : 7px;
+        }
+
+        .numEditor {
+        display          : flex;
+        border           : 1px solid black;
+        margin           : 5px 7px 5px 10px;
+        width            : 415px;
+        height           : 53px;
+        }
+
+        .numEditor1 {
+        background-color : gray;
+        color            : black;
+        text-align       : center;
+        border           : none;
+        font-size        : 24px;
+        font-family      : Arial;
+        padding          : 10px 5px;
+        width            : 215px;
+        height           : 51px;
+        display          : inline-block;
+        float            : left;
+        text-align       : right;
+        }
+
+        .numLabel {
+        height           : 60px;
+        text-align       : center;
+        align-items      : center;
+        width            : 400px;
+        color            : black;
+        font-size        : 20px;
+        font-family      : serif;
+        font-weight      : bold;
+        position         : absolute;
+        bottom           : 300px;
+        margin           : 0 auto;
+        margin-left      : 20px;
+        }
+
+        .twoValEditor{
+        position         : relative;
+        height           : 380px;
+        width            : 390px;
+        background-color : black;
+        border           : 1px solid black;
+        display          : block;
+
+        padding          : 10px 10px;
+        align-items      : center;
+        margin           : 80px 25px;
+        }
+
+        .twoValLabel {
+        color            : white;
+        text-align       : center;
+        padding          : 12px 5px;
+        display          : inline-block;
+        width            : 180px;
+        height           : 50px;
+        font-size        : 20px;
+        align-items      : center;
+        margin-bottom    : 20px;
+        margin-left      : 10px;
+        float            : none;
+        }
+
+        .twoValInput {
+        background-color : black;
+        color            : white;
+        border           : 1px solid white;
+        text-align       : center;
+        font-size        : 20px;
+        padding          : 5px 5px;
+        margin-right     : 20px;
+        width            : 140px;
+        height           : 50px;
+        display          : block;
+        float            : right;
+        }
+
+        .emptyTest{
+        width            : 400px;
+        height           : 200px;
+        font-size        : 26px;
+        font-weight      : bold;
+        text-align       : center;
+        position         : absolute;
+        margin           : 170px 10px;
+
+        }
+        .testView {
+        overflow-y       : scroll;
+        height           : 500px;
+        width            : 420px;
+        margin-left      : 6px;
+        margin-bottom    : 14px;
+
+
+        }
+
+        .testViewBox
+        {
+        width            : 185px;
+        height           : 130px;
+        font-size        : 15px;
+        font-family      : Arial;
+        background-color : gray;
+        display          : inline-block ;
+        color            : black;
+
+        margin-left      : 9px;
+
+        margin-top       : 5px;
+        position         : relative;
+        }
+
+
+
+        .testBoxTitle {
+        border           : 1px solid black;
+        font-size        : 18px;
+        width            : 185px;
+        height           : 30px;
+        position         : absolute;
+        margin :0; top:0; left:0;
+        background-color : green;
+        color            : white;
+        text-align       : left;
+        padding          : 3px;
+        }
+
+        .testLabel{
+        height           : 100px;
+        width            : 185px;
+        color            : white;
+        background-color : gray;
+        padding          : 3px;
+        margin-top       : 30px;
+        text-align       : justify;
+        position         : absolute;
+        white-space      : pre;
+        }
+
+        .statusLabel{
+        height           : 40px;
+        width            : 200px;
+        color            : black;
+        background-color : gray;
+        text-align       : center;
+        position         : relative;
+        display          : inline-block;
+        top              : 360px;
+        left             : 10px;
+        margin           : 5px 5px;
+
+        }
+        .StatusLine{
+        height           : 40px;
+        color            : black;
+        border           : 1px solid black;
+        width            : 410px;
+        margin-left      : 15px;
+        bottom           : 2px;
+        }
+
+        .statuslinelabel{
+        height           : 40px;
+        width            : 180px;
+        display          : inline-block;
+        margin-left      : 13px;
+        background-color : gray;
+        color            : black;
+        font-size        : 18px;
+        text-align       : center;
+        padding          : 10px 10px;
+        margin-bottom    : 3px;
+
+        }
+
+        .MVLView{
+        background-color : black;
+        margin           : 6px 6px 6px 6px;
+        height           : 540px;
+        width            : 420px;
+        display          : block;
+        }
+
+        .MVLtest{
+        height           : 40px;
+        background-color : gray;
+        color            : black;
+        border           : none;
+        width            : 400px;
+        margin           : 10px 5px 5px 10px;
+        }
+
+        .Service{
+        height           : 80px;
+        width            : 400px;
+        margin           : 10px 5px 5px 10px;
+        }
+
+        .SButton{
+        display          : inline-block;
+        width            : 65px;
+        height           : 75px;
+        margin           : 5px 5px 5px 5px;
+        background-color : gray;
+        }
+        .SrvButton{
+        height           : 25px;
+        width            : 45px;
+        margin           : 5px 5px 5px 10px;
+        background-color : gray;
+        border           : none;
+        color            : black;
+        font-size        : 16px;
+        }
+
+        .SButton:target{
+        outline: blue auto 5px;
+        background-color : blue; }
+
+        .buttons-click{
+        background : #3371ff;
+        }
+
+        .buttons-clicked{
+        background : #3371ff;
+        }
+
+        .VL{
+        height           : 80px;
+        width            : 400px;
+        margin           : 45px 5px 5px 10px;
+
+        }
+
+        .VlButton{
+        height           : 45px;
+        width            : 62px;
+        margin           : 5px 5px 0px 5px;
+        color            : black;
+        display          : inline-block;
+        font-size        : 18px;
+        background-color : gray;
+        visibility       : hidden;
+        border           : none;
+        }
+
+
+        .PL{
+        height           : 80px;
+        width            : 400px;
+        margin           : 5px 5px 5px 10px;
+        }
+
+        .PlButton{
+        height           : 85px;
+        margin           : 0px 5px 5px 5px;
+        background-color : gray;
+        border           : none;
+
+        }
+
+     </style>
+
+ </head>
+    <body>
+      <div class="box">
+
+        <form>
+          <fieldset style="height:790px;">
+            <legend> ARGUS Remote Web application </legend>
+
+        <form>
+           <p>
+           <label class= "aboveTitle" id="Date"    > Date    </label>
+           <label class= "aboveTitle" id="version" > Version </label>
+           <label class= "aboveTitle" id="battery" > Battery </label>
+           </p>
+        </form>
+
+        <p class="Titleline">
+           <button class ="Back-button" id="back"  onclick="backClicked()" > &#8249; </button>
+           <label  class ="title"       id="title"                         >         </label>
+           <button class ="manager"     id="mgr"   onclick="mgrClicked()"  > &#9776; </button>
+        </p>
+
+        <form class ="UI" id="listElement" type ="text"></form>
+
+        <p class ="Argus_connection" id="anschluss"></p>
+
+        <div class ="button-group">
+           <button class="button" id="softKeyName1" onclick="sk1clicked()" >  </button>
+           <button class="button" id="softKeyName2" onclick="sk2clicked()" >  </button>
+           <button class="button" id="softKeyName3" onclick="sk3clicked()" >  </button>
+           <button class="button" id="softKeyName4" onclick="sk4clicked()" >  </button>
+        </div>
+
+          </fieldset>
+        </form>
+
+      </div>
+    </body>
+</html>
+
+
